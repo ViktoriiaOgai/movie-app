@@ -1,4 +1,4 @@
-// components/MovieCard.tsx
+
 "use client";
 
 import { Card, Tag } from "antd";
@@ -14,12 +14,17 @@ export default function MovieCard({ movie }: Props) {
   const releaseYear = movie.release_date
     ? format(new Date(movie.release_date), "MMMM d, yyyy")
     : "—";
+  const POSTER_BASE_URL = 'https://image.tmdb.org/t/p/w300';
+  const posterUrl = movie.poster_path
+
+  ? `${POSTER_BASE_URL}${movie.poster_path}`
+  : '/no-poster.png'; // локальная заглушка
 
    return (
     <article className="movie-card">
       <img
         className="movie-poster"
-        src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+        src={posterUrl}
         alt={movie.title}
       />
 
@@ -35,7 +40,7 @@ export default function MovieCard({ movie }: Props) {
         </div>
 
         <p>
-          {movie.overview.slice(0, 140)}...
+          {movie.overview.slice(0, 140)}... 
         </p>
       </div>
     </article>

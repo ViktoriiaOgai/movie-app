@@ -5,14 +5,7 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+ @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -23,4 +16,42 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Inter;
+}
+
+/*Loader*/
+.loader {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100vh !important;
+    width: 100% !important;
+    position: fixed; /* Фиксируем на весь экран */
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон */
+    z-index: 9999;
+}
+
+/* Размер самого блока со спиннером */
+.loader .ant-spin-dot {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 40px !important;
+}
+
+.loader .ant-spin-dot-item {
+    background-color: rgb(190, 4, 4) !important; /* Ваш красный цвет */
+    width: 12px !important;  /* Принудительная ширина точки */
+    height: 12px !important; /* Принудительная высота точки */
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+/* Стиль для текста "Loading..." */
+.loader .ant-spin-text {
+    color: rgb(190, 4, 4) !important;
+    margin-top: 15px !important;
+    font-size: 20px; /*  для текста под спиннером */
+    font-weight: bold;
+    display: block !important;
 }
