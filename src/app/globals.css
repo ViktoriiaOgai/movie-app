@@ -19,20 +19,6 @@ body {
 }
 
 /*Loader*/
-.loader {
-    display: flex !important;
-    flex-direction: column;
-    justify-content: center !important;
-    align-items: center !important;
-    height: 100vh !important;
-    width: 100% !important;
-    position: fixed; /* Фиксируем на весь экран */
-    top: 0;
-    left: 0;
-    background: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон */
-    z-index: 9999;
-}
-
 /* Размер самого блока со спиннером */
 .loader .ant-spin-dot {
     width: 40px !important;

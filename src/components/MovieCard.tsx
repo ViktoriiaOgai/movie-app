@@ -5,6 +5,7 @@ import { Card, Tag } from "antd";
 import { format } from "date-fns";
 import { Movie } from "@/types/movie";
 import { truncate } from "@/lib/truncate";
+import '../app/styles/start.css';
 
 type Props = {
   movie: Movie;

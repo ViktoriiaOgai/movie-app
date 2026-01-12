@@ -14,10 +14,10 @@ export default function Error ({
     return (
         <div className="error">
             <Alert
-                type="error"
-                showIcon
-                message={<strong>An error occurred.</strong>}
-                description={error.message || 'Failed Network'}
+  type="error"
+  showIcon
+  title="An error occurred."
+  description={error.message}
 />
             <Button
                 onClick={()=>reset()}
