@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Loading from '../app/loading';
 import ErrorComponent from '../app/error';
-import MovieList from './MovieList';
 import { Movie } from '../types/movie';
 import { getMovies } from '../lib/tmdb';
 
