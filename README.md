@@ -1,1 +1,1 @@
-https://movie-1cmt7wnku-viktoriias-projects-fc4ddb3c.vercel.app/
+https://movie-qkpm2am50-viktoriias-projects-fc4ddb3c.vercel.app
