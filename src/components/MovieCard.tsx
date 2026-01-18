@@ -1,11 +1,6 @@
 
-"use client";
-
-import { Card, Tag } from "antd";
 import { format } from "date-fns";
-import { Movie } from "@/types/movie";
-import { truncate } from "@/lib/truncate";
-import '../app/styles/start.css';
+import { Movie } from "@/types";
 
 type Props = {
   movie: Movie;
@@ -22,25 +17,25 @@ export default function MovieCard({ movie }: Props) {
   : '/no-poster.png'; // локальная заглушка
 
    return (
-    <article className="movie-card">
+    <article className="flex bg-white overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.15)] w-[451px] h-[279px] mb-[20px]">
       <img
-        className="movie-poster"
+        className=" w-[183px] h-[281px] opacity-100 object-cover"
         src={posterUrl}
         alt={movie.title}
       />
 
-      <div className="movie-content">
-        <h3>{movie.title}</h3>
-        <span className="date">
+      <div className="p-[16px] flex flex-col g-[8px]">
+        <h3 className="font-normal text-[20px] leading-[28px] align-middle">{movie.title}</h3> 
+        <span className="font-normal text-[12px] leading-[22px] align-middle text-[rgba(130,126,126,1)]">
           {movie.release_date}
         </span>
 
-        <div className="genres">
+        <div className="genres text-[11px] mt-[10px] border-[#ddd] px-[6px] py-[2px] mr-[6px] rounded">
           <span>Action</span>
           <span>Drama</span>
         </div>
 
-        <p>
+        <p className="font-normal text-[12px] mt-[10px] leading-[22px] text-[rgba(0, 0, 0, 1)]">
           {movie.overview.slice(0, 140)}... 
         </p>
       </div>

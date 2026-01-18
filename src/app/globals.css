@@ -1,9 +1,18 @@
-@import "tailwindcss";
+
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
 
 :root {
+  --font-inter: "Inter", sans-serif;
   --background: #ffffff;
   --foreground: #171717;
-}
+
+  --btn-font: var(--font-inter);
+  --input-font: var(--font-inter);
+  --card-font: var(--font-inter);
+  --dropdown-font: var(--font-inter)
+  }
 
  @media (prefers-color-scheme: dark) {
   :root {
@@ -11,14 +20,26 @@
     --foreground: #ededed;
   }
 }
-
+.ant-layout {
+  background-color: #fff !important;
+}
 body {
-  background: var(--background);
+  background: white !important;
   color: var(--foreground);
-  font-family: Inter;
+  font-family: var(--font-inter), sans-serif !important;
+  margin-bottom: 20px;
+}
+
+* {
+  font-family: var(--font-inter) !important;
 }
 
 /*Loader*/
+.loader {
+  display: flex;
+  justify-content: center;
+  margin-top: 40;
+}
 /* Размер самого блока со спиннером */
 .loader .ant-spin-dot {
     width: 40px !important;
@@ -41,3 +62,4 @@ body {
     font-weight: bold;
     display: block !important;
 }
+

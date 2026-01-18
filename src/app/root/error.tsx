@@ -1,7 +1,6 @@
 'use client'
 
 import { Alert, Button } from "antd"
-import "../app/styles/start.css"
 
 export default function Error ({
   error,
@@ -21,7 +20,7 @@ export default function Error ({
 />
             <Button
                 onClick={()=>reset()}
-                className="reset"> Try again
+                className="error p-[20px] mw-[800px] m-auto"> Try again
             </Button>
         </div>
     )

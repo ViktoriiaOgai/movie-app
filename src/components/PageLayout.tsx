@@ -9,13 +9,7 @@ export default function PageLayout({
 }) {
   return (
     <Layout>
-      <Layout.Content
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "40px 20px",
-        }}
-      >
+      <Layout.Content>
         {children}
       </Layout.Content>
     </Layout>
