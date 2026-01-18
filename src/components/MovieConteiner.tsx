@@ -54,7 +54,8 @@ const PAGE_SIZE = 6;
         setTotalPages(data.total_pages);
 
       } catch (err) {
-        setError(err instanceof Error ? err : new Error('Unknown error'));
+        setError(new Error('Something went wrong'));
+
       } finally {
         setLoading(false);
       }
