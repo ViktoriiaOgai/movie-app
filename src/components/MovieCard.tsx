@@ -67,7 +67,7 @@ shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
      
         <h3 className="font-normal text-[20px] leading-[28px]">{movie.title}</h3> 
         <span className="font-normal text-[12px] leading-[22px] text-[rgba(130,126,126,1)]">
-          {movie.release_date}
+          {releaseYear}
         </span>
         <div className="flex flex-wrap gap-2 mt-2">
           {genreNames.map((genre) => (
