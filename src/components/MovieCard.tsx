@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { Movie } from "@/types";
 import { useGenres } from '@/app/providers';
 import { buildGenresMap, getGenreNames } from "@/constants/genres";
+import Image from 'next/image';
 
 
 
@@ -42,11 +43,15 @@ const getRatingBgClass = (rating: number) => {
     <article className="w-[500px] h-[300px] flex bg-white 
 shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
      
-   <img
-        className=" shrink-0 w-[190px] h-[300px] object-cover"
-        src={posterUrl}
-        alt={movie.title}
-      />
+   <Image
+  src={posterUrl}
+  alt={movie.title}
+  width={190}
+  height={300}
+  loading="eager"
+  priority
+  className="shrink-0 object-cover"
+/>
       
       <div className="relative flex-1 p-[16px] flex flex-col">
          <div

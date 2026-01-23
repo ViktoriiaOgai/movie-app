@@ -75,6 +75,7 @@ const loadMovies = async () => {
     setTotalPages(data.total_pages ?? 1);
 
   } catch (e) {
+    console.error(e);
     setMovies([]);
     setTotalPages(1);
     setError(new Error('Failed to load movies'));
