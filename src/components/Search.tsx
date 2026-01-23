@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useMemo } from 'react';
+import { ChangeEvent, useMemo, useEffect } from 'react';
 import { Input } from 'antd';
 import debounce from 'lodash/debounce';
 
@@ -16,6 +16,12 @@ export default function SearchComponent({ onSearch }: SearchProps) {
       }, 500),
     [onSearch]
   );
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     debouncedSearch(e.target.value);

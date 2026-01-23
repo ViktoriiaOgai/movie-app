@@ -5,4 +5,11 @@ export type Movie = {
   overview: string;
   release_date: string;
   poster_path: string | null;
+  rating?: number; 
+  genre_ids: number[];
+  vote_average: number;
+};
+export type Genre = {
+  id: number;
+  name: string;
 };

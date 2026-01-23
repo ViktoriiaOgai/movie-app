@@ -1,3 +1,5 @@
+'use client';
+
 import { Pagination } from 'antd';
 import '../app/globals.css'
 
@@ -14,7 +16,7 @@ export default function PaginationComponent({ current, totalPages, onChange }: P
     <div className="flex justify-center mx-auto py-12 text-[rgba(0,0,0,0.65)] text-xs">
     <Pagination 
       current={current}
-      total={totalPages}
+      total={totalPages*PAGE_SIZE}
       pageSize={PAGE_SIZE}//количество элементов на одной странице
       onChange={onChange}
       showSizeChanger={false} // убирает выбор количества элементов на странице

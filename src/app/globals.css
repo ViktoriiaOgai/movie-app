@@ -38,7 +38,8 @@ body {
 .loader {
   display: flex;
   justify-content: center;
-  margin-top: 40;
+  margin-top: 40px;
+  flex-direction: column;
 }
 /* Размер самого блока со спиннером */
 .loader .ant-spin-dot {
@@ -57,9 +58,10 @@ body {
 /* Стиль для текста "Loading..." */
 .loader .ant-spin-text {
     color: rgb(190, 4, 4) !important;
-    margin-top: 15px !important;
+    margin-top: 40px !important;
     font-size: 20px; /*  для текста под спиннером */
     font-weight: bold;
     display: block !important;
+    
 }
 

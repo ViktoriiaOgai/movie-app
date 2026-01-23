@@ -4,13 +4,20 @@ import { Movie } from "@/types";
 
 type Props = {
   movies: Movie[];
+  sessionId: string | null;
+  onRate: (movieId: number, rating: number) => void;
 };
 
-export default function MovieList({ movies }: Props) {
+export default function MovieList({ movies, sessionId, onRate }: Props) {
   return (
-    <div className=" grid grid-cols-2 grid-rows-3 justify-center gap-x-6 gap-y-6 w-[950px] mx-auto py-20 ">
+     <div className="grid grid-cols-2 gap-y-[30px] max-w-[1100px] w-full">
       {movies.map(movie => (
-        <MovieCard key={movie.id} movie={movie} />
+        <MovieCard
+          key={movie.id}
+          movie={movie}
+          sessionId={sessionId}
+          onRate={onRate}
+        />
       ))}
     </div>
   );
