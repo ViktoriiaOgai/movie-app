@@ -17,6 +17,7 @@ export async function rateMovie(
   );
 
   if (!res.ok) {
+    console.error("TMDb rating error:", res);
     throw new Error("Failed to rate movie");
   }
 

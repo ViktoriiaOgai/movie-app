@@ -73,15 +73,15 @@ shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
         <h3 className="font-normal text-[20px] leading-[28px]">{movie.title}</h3> 
         <span className="font-normal text-[12px] leading-[22px] text-[rgba(130,126,126,1)]">
           {releaseYear}
-        </span>
-        <div className="flex flex-wrap gap-2 mt-2">
+        </span >
+        <div className="flex flex-wrap gap-[8px] mt-[8px]">
           {genreNames.map((genre) => (
-            <span
+            <div
               key={genre}
-              className="border border-[#D9D9D9] rounded px-4 py-2 text-[11px] leading-[16px]"
+              className="inline-flex items-center border border-[#D9D9D9] rounded px-[8px] py-2 text-[11px] leading-[16px] "
             >
               {genre}
-            </span>
+            </div>
           ))}
         </div>
 
@@ -91,11 +91,13 @@ shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
         {sessionId && (
         <div className="mt-2 text-xs leading-none">
   
+  {sessionId && (
   <Rate
     count={10}
     value={movie.rating ?? 0}
     onChange={(value) => onRate(movie.id, value)}
   />
+)}
 </div>
       )}
       </div>
