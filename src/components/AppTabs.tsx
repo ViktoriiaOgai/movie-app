@@ -1,30 +1,29 @@
 'use client';
 
 import { Tabs, Spin } from 'antd';
-import { useEffect, useState } from 'react';
 import MovieContainer from './MovieConteiner';
 import SearchComponent from './Search';
-import { createGuestSession } from '@/api/auth'; // твой метод для создания гостевой сессии
+import { useState, useEffect } from 'react';
+import { useSession } from '@/app/providers';
 
 export default function AppTabs() {
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const { sessionId } = useSession();
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  // создаём гостевую сессию при старте
+  // имитация загрузки данных / спиннера
   useEffect(() => {
-    createGuestSession().then((id) => {
-      setSessionId(id);
-    });
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
   }, []);
 
-  // Пока sessionId не пришёл — показываем лоадер
-  if (!sessionId) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <Spin
           size="large"
           tip="Loading movies..."
-          className='loader'
+          className="loader"
           fullscreen
         />
       </div>

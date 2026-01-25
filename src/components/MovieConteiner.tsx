@@ -6,7 +6,7 @@ import MovieList from './MovieList';
 import PaginationComponent from './Pagination';
 import ErrorComponent from '@/app/root/error';
 import { Movie } from '@/types';
-import {Empty } from 'antd';
+import {Empty, Spin } from 'antd';
 
 interface Props {
   mode: 'search' | 'rated';
@@ -74,7 +74,9 @@ const loadMovies = useCallback(async () => {
   return;
 }
 
-    const res = await fetch(url);
+    const res = await fetch(url, {
+  cache: 'no-store',
+});
     const data = await res.json();
 
     if (mode === 'rated') {
@@ -107,15 +109,24 @@ useEffect(() => {
   useEffect(() => {
   loadMovies();
 }, [loadMovies]);
-
+  
 
   if (error)
     return <ErrorComponent error={error} reset={() => setPage(1)} />;
 
   return (
     <section className="min-h-screen flex flex-col items-center  gap-y-[30px]">
-  
-         
+        {loading && (
+             <div className="flex justify-center items-center min-h-screen">
+               <Spin
+                 size="large"
+                 tip="Loading movies..."
+                 className='loader'
+                 fullscreen
+               />
+             </div>
+        )
+          }
       {!loading && !error && movies.length === 0 && (
       <div className="min-h-screen flex justify-center items-center">
  <Empty description="No results" />

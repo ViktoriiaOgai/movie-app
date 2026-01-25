@@ -1,7 +1,6 @@
 'use client';
 
-import { Pagination } from 'antd';
-import '../app/globals.css'
+import { Pagination } from 'antd'
 
 type Props = {
   current: number;

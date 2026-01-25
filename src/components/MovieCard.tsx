@@ -78,7 +78,7 @@ shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
           {genreNames.map((genre) => (
             <div
               key={genre}
-              className="inline-flex items-center border border-[#D9D9D9] rounded px-[8px] py-2 text-[11px] leading-[16px] "
+              className="inline-flex items-center border border-[#D9D9D9] rounded px-[8px] text-[11px] leading-[16px] "
             >
               {genre}
             </div>
