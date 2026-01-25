@@ -1,6 +1,6 @@
 'use client';
 import { rateMovie } from "@/api/rating";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getMovies } from '@/lib/tmdb';
 import MovieList from './MovieList';
 import PaginationComponent from './Pagination';
@@ -41,8 +41,10 @@ const MovieContainer = ({  mode, sessionId, searchTerm}: Props) => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
 const PAGE_SIZE = 6;
-const loadMovies = async () => {
+
+const loadMovies = useCallback(async () => {
   setLoading(true);
   setError(null);
 
@@ -89,26 +91,22 @@ const loadMovies = async () => {
 }
 
 
-  } catch (e) {
+  } catch {
     setMovies([]);
     setTotalPages(1);
     setError(new Error('Failed to load movies'));
   } finally {
     setLoading(false);
   }
-};
-useEffect(() => {
-  if (mode === 'rated') {
-    setPage(1);
-  }
-}, [mode]);
+}, [mode, page, searchTerm, sessionId]);
+
 useEffect(() => {
   setPage(1);
 }, [mode, searchTerm]);
 
   useEffect(() => {
   loadMovies();
-}, [mode, page, searchTerm, sessionId]);
+}, [loadMovies]);
 
 
   if (error)
