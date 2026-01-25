@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { getGenres } from "@/lib/tmdb";
 import { createGuestSession } from "@/api/auth";
 import { Genre } from "@/types";
-import { ConfigProvider, Spin } from "antd";
+import { ConfigProvider} from "antd";
 
 /* ---------- Genres ---------- */
 
@@ -48,7 +48,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   });
 
   const [genres, setGenres] = useState<Genre[]>([]);
-  const [loading, setLoading] = useState(!sessionId);
+  
 
   // Жанры
   useEffect(() => {
@@ -61,8 +61,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
     createGuestSession().then((id) => {
       setSessionId(id);
-      setLoading(false);
-    });
+     });
   }, [sessionId]);
   
 
