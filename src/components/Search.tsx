@@ -28,7 +28,7 @@ export default function SearchComponent({ onSearch }: SearchProps) {
   };
 
   return (
-    <div className="mx-auto w-[75%] py-10 mb-[20px] mt-[20px]">
+    <div className="w-[90%] mx-auto md:w-[85%] py-5 mb-5 mt-5">
       <Input
         placeholder="Type to search..."
         onChange={handleInputChange}

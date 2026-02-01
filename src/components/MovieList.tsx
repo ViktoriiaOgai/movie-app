@@ -1,6 +1,7 @@
 
 import MovieCard from "./MovieCard";
 import { Movie } from "@/types";
+import "../app/globals.css"
 
 type Props = {
   movies: Movie[];
@@ -10,7 +11,7 @@ type Props = {
 
 export default function MovieList({ movies, sessionId, onRate }: Props) {
   return (
-     <div className="grid grid-cols-2 gap-y-[30px] max-w-[1100px] w-full">
+     <div className="grid grid-cols-1  md:grid-cols-2 gap-y-7.5 max-w-275 w-full mx-auto px-4 sm:px-0">
       {movies.map(movie => (
         <MovieCard
           key={movie.id}

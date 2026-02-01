@@ -39,25 +39,24 @@ const getRatingBgClass = (rating: number) => {
   console.log('MovieCard render', movie.title);
 
 
-   return (
-    <article className="w-[500px] h-[300px] flex bg-white 
-shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
-     
+     {/*return (
+    <article className="mx-auto w-full max-w-125 flex bg-white 
+shadow-[0_4px_12px_rgba(0,0,0,0.15)] ">
+  <div className="relative w-[35%] sm:w-47.5 shrink-0">  
    <Image
   src={posterUrl}
   alt={movie.title}
-  width={190}
-  height={300}
   loading="eager"
   priority
-  className="shrink-0 object-cover"
+  fill
+  className="object-cover"
 />
-      
-      <div className="relative flex-1 p-[16px] flex flex-col">
+      </div>
+      <div className="relative flex-1 p-4 flex flex-col">
          <div
               className={`
-                absolute top-[16px] right-[16px]
-                w-[30px] h-[30px]
+                absolute top-4 right-4
+                w-7.5 h-7.5
                 rounded-full
                 border-2
                 flex items-center justify-center
@@ -70,22 +69,22 @@ shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
   
           </div>
      
-        <h3 className="font-normal text-[20px] leading-[28px]">{movie.title}</h3> 
-        <span className="font-normal text-[12px] leading-[22px] text-[rgba(130,126,126,1)]">
+        <h3 className="font-normal text-[20px] leading-7 truncate">{movie.title}</h3> 
+        <span className="font-normal text-[12px] leading-5.5 text-[rgba(130,126,126,1)]">
           {releaseYear}
         </span >
-        <div className="flex flex-wrap gap-[8px] mt-[8px]">
+        <div className="flex flex-wrap gap-2 mt-2">
           {genreNames.map((genre) => (
             <div
               key={genre}
-              className="inline-flex items-center border border-[#D9D9D9] rounded px-[8px] text-[11px] leading-[16px] "
+              className="inline-flex items-center border border-[#D9D9D9] rounded px-2 text-[11px] leading-4 "
             >
               {genre}
             </div>
           ))}
         </div>
 
-        <p className="font-normal text-[12px] mt-[10px] leading-[22px] text-[rgba(0, 0, 0, 1)]">
+        <p className="font-normal text-[12px] mt-2.5 leading-7.5 text-[rgba(0, 0, 0, 1)]">
           {movie.overview.slice(0, 140)}... 
         </p>
         {sessionId && (
@@ -104,5 +103,83 @@ shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
     </article>
     
    
-  );
+  );*/}
+  return (
+  <article className="mx-auto w-full max-w-125 md:max-w-none md:h-70 flex flex-col md:flex-row bg-white shadow-[0_4px_12px_rgba(0,0,0,0.15)] overflow-hidden">
+    
+    {/* ВЕРХНИЙ БЛОК (Мобильные) / ЛЕВЫЙ БЛОК (Десктоп) */}
+    <div className="flex md:contents"> 
+      {/* 
+         md:contents — магия Tailwind. На десктопе этот div "исчезает", 
+         и Image с правой частью становятся прямыми соседями в md:flex-row 
+      */}
+      
+      {/* Постер */}
+      <div className="relative w-[20%] md:w-47.5 shrink-0 m-2 md:m-0 aspect-2/3 md:aspect-auto md:h-full">
+        <Image
+          src={posterUrl}
+          alt={movie.title}
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
+
+      {/* Инфо справа от картинки (только для мобилок это "шапка") */}
+      <div className="relative flex-1 p-2 md:hidden"> 
+        {/* Этот блок виден ТОЛЬКО на мобилках рядом с фото */}
+        <div className={`absolute top-2 right-2 w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-semibold ${getRatingBgClass(ratingValue)}`}>
+          {ratingValue.toFixed(1)}
+        </div>
+        <h3 className="text [14px] text-wrap md:text-[18px] leading-tight truncate pr-8">{movie.title}</h3>
+        <span className="text-[12px] text-gray-500">{releaseYear}</span>
+        <div className="flex flex-wrap gap-1 mt-2">
+          {genreNames.map((genre) => (
+            <div
+              key={genre}
+              className="inline-flex items-center border border-[#D9D9D9] rounded px-2 text-[11px] leading-4 "
+            >
+              {genre}</div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* ОСНОВНОЙ КОНТЕНТ (На десктопе здесь всё: и заголовок, и описание) */}
+    <div className="p-3 md:p-4 flex flex-col flex-1 min-w-0">
+      
+      {/* Заголовок для ДЕСКТОПА (скрыт на мобилках) */}
+      <div className="hidden md:flex justify-between items-start">
+        <div className="min-w-0">
+          <h3 className="text-[20px] leading-7 truncate pr-2">{movie.title}</h3>
+          <span className="text-[12px] text-gray-500">{releaseYear}</span>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {genreNames.map(g => (
+              <div key={g} className="border border-[#D9D9D9] rounded px-2 text-[11px]">{g}</div>
+            ))}
+          </div>
+        </div>
+        <div className={`shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-semibold ${getRatingBgClass(ratingValue)}`}>
+          {ratingValue.toFixed(1)}
+        </div>
+      </div>
+
+      {/* Описание (на мобилках идет под картинку, на десктопе — под заголовок) */}
+      <p className="font-normal text-[12px] mt-1 md:mt-4 leading-relaxed text-black line-clamp-4 md:line-clamp-5">
+        {movie.overview.slice(0, 140)}... 
+      </p>
+
+      {/* Звезды (всегда в самом низу своего контейнера) */}
+      {sessionId && (
+        <div className="mt-auto pt-1 flex justify-center md:justify-start scale-90 md:scale-100 origin-center md:origin-left">
+          <Rate
+            count={10}
+            value={movie.rating ?? 0}
+            onChange={(value) => onRate(movie.id, value)}
+          />
+        </div>
+      )}
+    </div>
+  </article>
+);
 }

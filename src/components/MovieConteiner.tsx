@@ -43,6 +43,8 @@ const MovieContainer = ({  mode, sessionId, searchTerm}: Props) => {
   const [error, setError] = useState<Error | null>(null);
 
 const PAGE_SIZE = 6;
+const MAX_PAGES = 500;
+const safePage = Math.min(page, MAX_PAGES);
 
 const loadMovies = useCallback(async () => {
   setLoading(true);
@@ -60,7 +62,7 @@ const loadMovies = useCallback(async () => {
     else if (searchTerm?.trim()) {
   url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
     searchTerm
-  )}&api_key=${API_KEY}&page=${page}`;
+  )}&api_key=${API_KEY}&page=${safePage}`;
 }
     else {
   const data = await getMovies(page);
@@ -70,7 +72,8 @@ const loadMovies = useCallback(async () => {
 }
 
   setMovies(data.results.slice(0, PAGE_SIZE));
-  setTotalPages(data.total_pages);
+  setTotalPages(Math.min(data.total_pages, MAX_PAGES));
+
   return;
 }
 
@@ -89,7 +92,7 @@ const loadMovies = useCallback(async () => {
   setTotalPages(Math.ceil(allMovies.length / PAGE_SIZE));
 } else {
   setMovies(Array.isArray(data.results) ? data.results.slice(0, PAGE_SIZE) : []);
-  setTotalPages(data.total_pages ?? 1);
+  setTotalPages(Math.min(data.total_pages ?? 1, 500));
 }
 
 
@@ -116,17 +119,7 @@ useEffect(() => {
 
   return (
     <section className="min-h-screen flex flex-col items-center  gap-y-[30px]">
-        {loading && (
-             <div className="flex justify-center items-center min-h-screen">
-               <Spin
-                 size="large"
-                 tip="Loading movies..."
-                 className='loader'
-                 fullscreen
-               />
-             </div>
-        )
-          }
+        
       {!loading && !error && movies.length === 0 && (
       <div className="min-h-screen flex justify-center items-center">
  <Empty description="No results" />
@@ -149,3 +142,4 @@ useEffect(() => {
   );
 }
 export default MovieContainer;
+

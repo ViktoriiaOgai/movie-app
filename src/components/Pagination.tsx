@@ -20,7 +20,7 @@ export default function PaginationComponent({ current, totalPages, onChange }: P
       onChange={onChange}
       showSizeChanger={false} // убирает выбор количества элементов на странице
       showLessItems={true} //делает пагинацию компактнее при большом числе страниц
-
+    
     />
     </div>
   );
