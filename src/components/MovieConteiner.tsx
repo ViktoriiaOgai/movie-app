@@ -118,7 +118,7 @@ useEffect(() => {
     return <ErrorComponent error={error} reset={() => setPage(1)} />;
 
   return (
-    <section className="min-h-screen flex flex-col items-center  gap-y-[30px]">
+    <section className="min-h-screen flex flex-col items-center  gap-y-7.5">
         
       {!loading && !error && movies.length === 0 && (
       <div className="min-h-screen flex justify-center items-center">
