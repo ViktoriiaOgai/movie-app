@@ -21,6 +21,10 @@ const MovieContainer = ({  mode, sessionId, searchTerm}: Props) => {
   try {
     await rateMovie(movieId, rating, sessionId);
 
+    const saved = JSON.parse(localStorage.getItem('my_ratings') || '{}');
+    saved[movieId] = rating;
+    localStorage.setItem('my_ratings', JSON.stringify(saved));
+
      if (mode !== 'rated') {
       setMovies(prev =>
         prev.map(movie =>
@@ -52,7 +56,7 @@ const loadMovies = useCallback(async () => {
 
   try {
     const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-
+    
     let url = '';
 
     if (mode === 'rated') {
@@ -66,14 +70,16 @@ const loadMovies = useCallback(async () => {
 }
     else {
   const data = await getMovies(page);
+  if (!data || !Array.isArray(data.results)) throw new Error('Invalid movie data');
 
-  if (!data || !Array.isArray(data.results)) {
-  throw new Error('Invalid movie data');
-}
+  const savedRatings = JSON.parse(localStorage.getItem('my_ratings') || '{}');
+  const updatedResults = data.results.map((m: Movie) => ({
+    ...m,
+    rating: savedRatings[m.id] || m.rating || 0
+  }));
 
-  setMovies(data.results.slice(0, PAGE_SIZE));
+  setMovies(updatedResults.slice(0, PAGE_SIZE));
   setTotalPages(Math.min(data.total_pages, MAX_PAGES));
-
   return;
 }
 
@@ -81,7 +87,7 @@ const loadMovies = useCallback(async () => {
   cache: 'no-store',
 });
     const data = await res.json();
-
+const savedRatings = JSON.parse(localStorage.getItem('my_ratings') || '{}');
     if (mode === 'rated') {
   const allMovies = Array.isArray(data.results) ? data.results : [];
 
@@ -91,7 +97,13 @@ const loadMovies = useCallback(async () => {
   setMovies(allMovies.slice(start, end));
   setTotalPages(Math.ceil(allMovies.length / PAGE_SIZE));
 } else {
-  setMovies(Array.isArray(data.results) ? data.results.slice(0, PAGE_SIZE) : []);
+  const results = Array.isArray(data.results) ? data.results : [];
+  const moviesWithRatings = results.map((m: Movie) => ({
+    ...m,
+    rating: savedRatings[m.id] || m.rating || 0
+  }));
+  setMovies(moviesWithRatings.slice(0, PAGE_SIZE));
+  
   setTotalPages(Math.min(data.total_pages ?? 1, 500));
 }
 

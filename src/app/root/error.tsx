@@ -20,7 +20,7 @@ export default function Error ({
 />
             <Button
                 onClick={()=>reset()}
-                className="error p-[20px] mw-[800px] m-auto"> Try again
+                className="error p-5 mw-[800px] m-auto"> Try again
             </Button>
         </div>
     )
