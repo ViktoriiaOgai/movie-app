@@ -6,7 +6,7 @@ import MovieList from './MovieList';
 import PaginationComponent from './Pagination';
 import ErrorComponent from '@/app/root/error';
 import { Movie } from '@/types';
-import {Empty, Spin } from 'antd';
+import {Empty} from 'antd';
 
 interface Props {
   mode: 'search' | 'rated';
@@ -16,7 +16,7 @@ interface Props {
 
 const MovieContainer = ({  mode, sessionId, searchTerm}: Props) => {
   const handleRate = async (movieId: number, rating: number) => {
-  if (!sessionId) return;
+  if (!sessionId || mode === 'rated') return;
 
   try {
     await rateMovie(movieId, rating, sessionId);
@@ -25,17 +25,14 @@ const MovieContainer = ({  mode, sessionId, searchTerm}: Props) => {
     saved[movieId] = rating;
     localStorage.setItem('my_ratings', JSON.stringify(saved));
 
-     if (mode !== 'rated') {
-      setMovies(prev =>
-        prev.map(movie =>
-          movie.id === movieId
-            ? { ...movie, rating }
-            : movie
-        )
-      );
-    } else {
-      await loadMovies(); 
-    }
+     setMovies(prev =>
+      prev.map(movie =>
+        movie.id === movieId
+          ? { ...movie, rating }
+          : movie
+      )
+    );
+    
   } catch (e) {
     console.error("Rating failed", e);
   }
@@ -89,12 +86,18 @@ const loadMovies = useCallback(async () => {
     const data = await res.json();
 const savedRatings = JSON.parse(localStorage.getItem('my_ratings') || '{}');
     if (mode === 'rated') {
+      await new Promise(resolve => setTimeout(resolve, 300));
   const allMovies = Array.isArray(data.results) ? data.results : [];
-
+  // Добавляем проверку локальных рейтингов, чтобы оценка не "моргала"
+  const savedRatings = JSON.parse(localStorage.getItem('my_ratings') || '{}');
+  const synchronizedMovies = allMovies.map((m: Movie) => ({
+    ...m,
+    rating: savedRatings[m.id] || m.rating || 0
+  }));
   const start = (page - 1) * PAGE_SIZE;
   const end = start + PAGE_SIZE;
 
-  setMovies(allMovies.slice(start, end));
+  setMovies(synchronizedMovies.slice(start, end));
   setTotalPages(Math.ceil(allMovies.length / PAGE_SIZE));
 } else {
   const results = Array.isArray(data.results) ? data.results : [];
@@ -142,6 +145,7 @@ useEffect(() => {
           movies={movies}  
           sessionId={sessionId}
           onRate={handleRate}
+          mode={mode}
           />}
           {!loading && totalPages > 1 && (
           <PaginationComponent

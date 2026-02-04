@@ -9,48 +9,48 @@ import { useSession } from '@/app/providers';
 export default function AppTabs() {
   const { sessionId } = useSession();
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('search'); 
   const [loading, setLoading] = useState(true);
 
-  // имитация загрузки данных / спиннера
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Spin
-          size="large"
-          tip="Loading movies..."
-          className="loader"
-          fullscreen
-        />
-      </div>
-    );
-  }
+  if (loading) return <Spin size="large" fullscreen />;
 
   const items = [
     {
       key: 'search',
       label: 'Search',
+      // Вкладка search всегда живет в DOM, чтобы не терять ввод текста
       children: (
-        <>
+        <div style={{ display: activeTab === 'search' ? 'block' : 'none' }}>
           <SearchComponent onSearch={setSearchTerm} />
           <MovieContainer
             mode="search"
             sessionId={sessionId}
             searchTerm={searchTerm}
           />
-        </>
+        </div>
       ),
     },
     {
       key: 'rated',
       label: 'Rated',
-      children: <MovieContainer mode="rated" sessionId={sessionId} />,
+      // Вкладка rated пересоздается ТОЛЬКО когда она активна
+      children: activeTab === 'rated' ? (
+        <MovieContainer mode="rated" sessionId={sessionId} />
+      ) : null,
     },
   ];
 
-  return <Tabs items={items} centered />;
+  return (
+    <Tabs 
+      activeKey={activeTab}
+      onChange={(key) => setActiveTab(key)} 
+      centered 
+      items={items}
+    />
+  );
 }

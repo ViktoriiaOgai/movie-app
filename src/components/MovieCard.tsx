@@ -7,21 +7,24 @@ import { Movie } from "@/types";
 import { useGenres } from '@/app/providers';
 import { buildGenresMap, getGenreNames } from "@/constants/genres";
 import Image from 'next/image';
-
+import { useEffect, useState } from 'react';
 
 
 type Props = {
   movie: Movie;
   sessionId: string | null;
+  
   onRate: (movieId: number, rating: number) => void;
+   disabled?: boolean;
 };
 
-export default function MovieCard({ movie, sessionId, onRate }: Props) {
+export default function MovieCard({ movie, sessionId, onRate,disabled  }: Props) {
   const ratingValue = movie.rating ?? 0;
 
 const { genres } = useGenres();
 const genresMap = buildGenresMap(genres);
 const genreNames = getGenreNames(movie.genre_ids, genresMap);
+
 const getRatingBgClass = (rating: number) => {
   if (rating < 3) return 'border-[#E90000]';
   if (rating < 5) return 'border-[#E97E00]';
@@ -37,73 +40,10 @@ const getRatingBgClass = (rating: number) => {
   ? `${POSTER_BASE_URL}${movie.poster_path}`
   : '/no-poster.png'; // локальная заглушка
   console.log('MovieCard render', movie.title);
-
-
-     {/*return (
-    <article className="mx-auto w-full max-w-125 flex bg-white 
-shadow-[0_4px_12px_rgba(0,0,0,0.15)] ">
-  <div className="relative w-[35%] sm:w-47.5 shrink-0">  
-   <Image
-  src={posterUrl}
-  alt={movie.title}
-  loading="eager"
-  priority
-  fill
-  className="object-cover"
-/>
-      </div>
-      <div className="relative flex-1 p-4 flex flex-col">
-         <div
-              className={`
-                absolute top-4 right-4
-                w-7.5 h-7.5
-                rounded-full
-                border-2
-                flex items-center justify-center
-                text-black bg-white text-sm font-semibold
-                z-30
-                ${getRatingBgClass(ratingValue)}
-              `}
-            >
-              {ratingValue.toFixed(1)}
   
-          </div>
-     
-        <h3 className="font-normal text-[20px] leading-7 truncate">{movie.title}</h3> 
-        <span className="font-normal text-[12px] leading-5.5 text-[rgba(130,126,126,1)]">
-          {releaseYear}
-        </span >
-        <div className="flex flex-wrap gap-2 mt-2">
-          {genreNames.map((genre) => (
-            <div
-              key={genre}
-              className="inline-flex items-center border border-[#D9D9D9] rounded px-2 text-[11px] leading-4 "
-            >
-              {genre}
-            </div>
-          ))}
-        </div>
 
-        <p className="font-normal text-[12px] mt-2.5 leading-7.5 text-[rgba(0, 0, 0, 1)]">
-          {movie.overview.slice(0, 140)}... 
-        </p>
-        {sessionId && (
-        <div className="mt-2 text-xs leading-none">
   
-  {sessionId && (
-  <Rate
-    count={10}
-    value={movie.rating ?? 0}
-    onChange={(value) => onRate(movie.id, value)}
-  />
-)}
-</div>
-      )}
-      </div>
-    </article>
-    
-   
-  );*/}
+
   return (
   <article className="mx-auto w-full max-w-125 md:max-w-none md:h-70 flex flex-col md:flex-row bg-white shadow-[0_4px_12px_rgba(0,0,0,0.15)] overflow-hidden">
     
@@ -175,7 +115,8 @@ shadow-[0_4px_12px_rgba(0,0,0,0.15)] ">
           <Rate
             count={10}
             value={movie.rating ?? 0}
-            onChange={(value) => onRate(movie.id, value)}
+           onChange={(value) => !disabled && onRate(movie.id, value)} 
+           disabled={disabled}
           />
         </div>
       )}
