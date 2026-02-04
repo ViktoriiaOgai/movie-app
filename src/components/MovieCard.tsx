@@ -7,7 +7,7 @@ import { Movie } from "@/types";
 import { useGenres } from '@/app/providers';
 import { buildGenresMap, getGenreNames } from "@/constants/genres";
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+
 
 
 type Props = {
@@ -62,6 +62,7 @@ const getRatingBgClass = (rating: number) => {
           fill
           className="object-cover"
           priority
+           sizes="(max-width: 768px) 35vw, (max-width: 1200px) 200px, 190px"
         />
       </div>
 

@@ -86,7 +86,6 @@ const loadMovies = useCallback(async () => {
     const data = await res.json();
 const savedRatings = JSON.parse(localStorage.getItem('my_ratings') || '{}');
     if (mode === 'rated') {
-      await new Promise(resolve => setTimeout(resolve, 300));
   const allMovies = Array.isArray(data.results) ? data.results : [];
   // Добавляем проверку локальных рейтингов, чтобы оценка не "моргала"
   const savedRatings = JSON.parse(localStorage.getItem('my_ratings') || '{}');
@@ -118,7 +117,7 @@ const savedRatings = JSON.parse(localStorage.getItem('my_ratings') || '{}');
   } finally {
     setLoading(false);
   }
-}, [mode, page, searchTerm, sessionId]);
+}, [mode, page, searchTerm, sessionId, safePage]);
 
 useEffect(() => {
   setPage(1);

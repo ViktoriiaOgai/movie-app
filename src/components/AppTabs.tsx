@@ -17,7 +17,18 @@ export default function AppTabs() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) return <Spin size="large" fullscreen />;
+   if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Spin
+          size="large"
+          tip="Loading movies..."
+          className="loader"
+          fullscreen
+        />
+      </div>
+    );
+  }
 
   const items = [
     {
