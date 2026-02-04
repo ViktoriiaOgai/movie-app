@@ -7,9 +7,10 @@ type Props = {
   movies: Movie[];
   sessionId: string | null;
   onRate: (movieId: number, rating: number) => void;
+  mode: 'search' | 'rated';
 };
 
-export default function MovieList({ movies, sessionId, onRate }: Props) {
+export default function MovieList({ movies, sessionId, onRate , mode}: Props) {
   return (
      <div className="grid grid-cols-1  md:grid-cols-2 gap-y-7.5 max-w-275 w-full mx-auto px-4 sm:px-0">
       {movies.map(movie => (
@@ -18,6 +19,7 @@ export default function MovieList({ movies, sessionId, onRate }: Props) {
           movie={movie}
           sessionId={sessionId}
           onRate={onRate}
+          disabled={mode === 'rated'}
         />
       ))}
     </div>
